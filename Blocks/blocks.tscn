@@ -4,12 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://bsaeeaqcrl2i8" path="res://Blocks/block.tscn" id="2_xqrvj"]
 
 [node name="blocks" type="Node2D"]
-position = Vector2(56, 24)
+position = Vector2(80, 80)
 script = ExtResource("1_6fmvw")
 type = 4
 metadata/_edit_group_ = true
 
 [node name="sprites" type="Node2D" parent="."]
+position = Vector2(0, -32)
 
 [node name="block" parent="sprites" instance=ExtResource("2_xqrvj")]
 
