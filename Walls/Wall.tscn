@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq8uq0om3v3fn"]
+
+[ext_resource type="PackedScene" uid="uid://bsaeeaqcrl2i8" path="res://Blocks/block.tscn" id="1_7cear"]
+[ext_resource type="Script" path="res://Walls/Wall.gd" id="1_c4job"]
+
+[node name="Wall" type="StaticBody2D"]
+script = ExtResource("1_c4job")
+
+[node name="block" parent="." instance=ExtResource("1_7cear")]
+position = Vector2(0, -0.5)

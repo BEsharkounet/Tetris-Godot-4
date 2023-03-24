@@ -3,27 +3,25 @@
 [ext_resource type="Script" path="res://Blocks/blocks.gd" id="1_6fmvw"]
 [ext_resource type="PackedScene" uid="uid://bsaeeaqcrl2i8" path="res://Blocks/block.tscn" id="2_xqrvj"]
 
-[node name="blocks" type="Node2D"]
-position = Vector2(80, 80)
+[node name="blocks" type="CharacterBody2D"]
+position = Vector2(80, 40)
 script = ExtResource("1_6fmvw")
-type = 4
-metadata/_edit_group_ = true
+type = 2
 
-[node name="sprites" type="Node2D" parent="."]
-position = Vector2(0, -32)
+[node name="block" parent="." instance=ExtResource("2_xqrvj")]
+position = Vector2(2.08165e-12, 2.08165e-12)
 
-[node name="block" parent="sprites" instance=ExtResource("2_xqrvj")]
-
-[node name="block2" parent="sprites" instance=ExtResource("2_xqrvj")]
+[node name="block2" parent="." instance=ExtResource("2_xqrvj")]
 position = Vector2(0, 32)
 
-[node name="block3" parent="sprites" instance=ExtResource("2_xqrvj")]
+[node name="block3" parent="." instance=ExtResource("2_xqrvj")]
 position = Vector2(32, 0)
 
-[node name="block4" parent="sprites" instance=ExtResource("2_xqrvj")]
+[node name="block4" parent="." instance=ExtResource("2_xqrvj")]
 position = Vector2(-32, 0)
 
 [node name="sprites_position" type="Node2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="pos1" type="Node2D" parent="sprites_position"]
 position = Vector2(-32, 0)
@@ -42,6 +40,26 @@ position = Vector2(0, 64)
 
 [node name="pos6" type="Node2D" parent="sprites_position"]
 position = Vector2(0, 96)
+
+[node name="rotation_center" type="Node2D" parent="."]
+
+[node name="center1" type="Node2D" parent="rotation_center"]
+
+[node name="center2" type="Node2D" parent="rotation_center"]
+
+[node name="center3" type="Node2D" parent="rotation_center"]
+position = Vector2(16, 48)
+
+[node name="center4" type="Node2D" parent="rotation_center"]
+position = Vector2(0, 32)
+
+[node name="center5" type="Node2D" parent="rotation_center"]
+position = Vector2(16, 16)
+
+[node name="center6" type="Node2D" parent="rotation_center"]
+position = Vector2(0, 32)
+
+[node name="center7" type="Node2D" parent="rotation_center"]
 
 [node name="Timer" type="Timer" parent="."]
 

@@ -1,7 +1,17 @@
-extends Sprite2D
+extends CollisionShape2D
 
 func _ready():
 	pass
+
+func explode():
+	change_color(Color(1, 1, 1, 1), 0.5)
+
+func get_color() -> Color:
+	return $sprite.modulate
+
+func change_color(color:Color, speed:float=0):
+	var tween = create_tween()
+	tween.tween_property($sprite, "modulate", color, speed)
 
 func set_color(val: int):
 	if val == 1: # 1 Light Blue
@@ -18,8 +28,3 @@ func set_color(val: int):
 		change_color(Color(0.59, 0, 1, 1))
 	else: # 7 Light Grey
 		change_color(Color(0.59, 0.59, 0.59, 1))
-
-# for explosion : Pale Yellow: color(1, 1, 0.78, 1)
-
-func change_color(color : Color):
-	modulate = color
