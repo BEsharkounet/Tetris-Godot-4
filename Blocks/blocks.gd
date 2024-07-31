@@ -1,110 +1,157 @@
-extends CharacterBody2D
+extends Node2D
 
-@export var type : int = 1
+class_name Blocks
 
-@onready var changing_block = [$block3, $block4]
+@export var block_scene:PackedScene = load("res://Blocks/Block.tscn")
 
-signal block_stopped(blocks)
+signal on_stop_falling(blocks:Blocks)
 
-var is_actif = false
+var fall_speed:float = 0.2
+var is_falling:bool = false
+var falling_direction:Vector2 = Vector2.DOWN
 
+var _level:Level = null
+
+var step:int = 32
+
+var type:BLOCKS_TYPES = BLOCKS_TYPES.I_POSE
+
+enum BLOCKS_TYPES {
+	I_POSE,
+	T_POSE,
+	S_POSE,
+	Z_POSE,
+	O_POSE,
+	L_POSE,
+	J_POSE
+}
+
+var block_positions:Array = [
+	[1, 4, 7, 10],
+	[0, 1, 2, 4],
+	[1, 2, 3, 4],
+	[0, 1, 4, 5],
+	[0, 1, 3, 4],
+	[0, 1, 2, 3],
+	[0, 1, 2, 5]
+]
+
+var block_rotations:Array = [
+	2,
+	1,
+	1,
+	1,
+	0,
+	1,
+	1
+]
+
+var block_color:Array = [
+	Color.SKY_BLUE,
+	Color.MEDIUM_PURPLE,
+	Color.YELLOW,
+	Color.ORANGE,
+	Color.WEB_GRAY,
+	Color.BLUE,
+	Color.SEA_GREEN
+]
+
+func set_blocks(val:int)->void:
+	type = val
+	_initialize_blocks()
+	_initialize_rotation_center()
+	_initialize_color()
+	_start_falling()
+
+func set_color(color:Color)->void:
+	for block:Block in $Blocks.get_children():
+		block.set_color(color)
+
+func set_level(level:Level)->void:
+	_level = level
+
+func start()->void:
+	pass
+
+func get_blocks()->Array:
+	var ar = []
+	for block:Block in $Blocks.get_children():
+		ar.append(block)
+	return ar
+
+# private methods
 func _ready():
-	set_block_position()
-	set_block_color()
+	randomize()
+	set_blocks(randi()%7)
 
-func _physics_process(delta):
-	if is_actif:
-		input_gestion()
+func _process(delta):
+	if is_falling:
+		if Input.is_action_just_pressed("ui_up"):
+			_rotate_left()
+		if Input.is_action_just_pressed("ui_down"):
+			_rotate_right()
+		if Input.is_action_just_pressed("ui_left"):
+			_move_left()
+		if Input.is_action_just_pressed("ui_right"):
+			_move_right()
 
-func input_gestion():
-	#rotate
-	if Input.is_action_just_pressed("ui_accept"):
-		rotate_blocks(90)
-	
-	# move
-	if Input.is_action_just_pressed("ui_left"):
-		move(Vector2(-32, 0))
-	elif Input.is_action_just_pressed("ui_right"):
-		move(Vector2(32, 0))
+func _start_falling()->void:
+	is_falling = true
+	$Timer.start(fall_speed)
 
-func rotate_blocks(angle):
-	var initial_position = global_position
-	rotation_degrees += angle
-	var hit = move_and_collide(Vector2())
-	global_position = initial_position
-	if hit != null:
-		rotation_degrees -= angle
+func _initialize_blocks()->void:
+	for value:int in block_positions[type]:
+		var position_for_block = $BlockPositions.get_child(value).position
+		_create_block_at(position_for_block)
 
-func get_all_block() -> Array:
-	var arr = []
-	for child in get_children():
-		if child.is_in_group("block"):
-			arr.append(child)
-	return arr
+func _create_block_at(position_for_block:Vector2)->void:
+	var block = block_scene.instantiate()
+	$Blocks.add_child(block)
+	block.position = position_for_block
 
-func move(direction, is_killer = false):
-	var initial_position = global_position
-	var hit = move_and_collide(direction)
-	if hit != null:
-		global_position = initial_position
-		if is_killer:
-			set_actif(false)
-			emit_signal("block_stopped", self)
+func _initialize_rotation_center()->void:
+	var distance:Vector2 = $RotationPositions.get_child(block_rotations[type]).global_position - $Blocks.global_position
+	$Blocks.position += distance
+	for block in $Blocks.get_children():
+		block.position -= distance
 
-func set_block_color():
-	for child in get_children():
-		if child.is_in_group("block"):
-			child.set_color(type)
+func _initialize_color()->void:
+	set_color(block_color[type])
 
-func set_actif(val, fall_speed = 1):
-	is_actif = val
-	if val:
-		$Timer.start(fall_speed)
-	else:
-		for child in get_children():
-			if child.is_in_group("block"):
-				child.explode()
-		$Timer.stop()
+func _rotate_left()->void:
+	$Blocks.rotate(-PI/2)
+	if hit_limits():
+		_rotate_right()
 
-func set_type(new_type:int) -> void:
-	type = new_type
+func _rotate_right()->void:
+	$Blocks.rotate(PI/2)
+	if hit_limits():
+		_rotate_left()
+
+func _move_left()->void:
+	global_position += step*Vector2.LEFT
+	if hit_limits():
+		_move_right()
+
+func _move_right()->void:
+	global_position += step*Vector2.RIGHT
+	if hit_limits():
+		_move_left()
+
+func hit_limits()->bool:
+	if _level:
+		for block in $Blocks.get_children():
+			if _level.collide_with(block):
+				return true
+	return false
 
 func _on_timer_timeout():
-	move(Vector2(0, 32), true)
+	fall()
+	$Timer.start(fall_speed)
 
-func change_center_position(pos:Vector2) -> void:
-	for child in get_children():
-		if child.is_in_group("block"):
-			child.position -= pos
-
-# 1 T, 2 Z, 3 I, 4 L, 5 O, 6 r, 7 S
-func set_block_position():
-	match type:
-		1:
-			changing_block[0].position = $sprites_position/pos1.position
-			changing_block[1].position = $sprites_position/pos2.position
-			change_center_position($rotation_center/center1.position)
-		2:
-			changing_block[0].position = $sprites_position/pos1.position
-			changing_block[1].position = $sprites_position/pos4.position
-			change_center_position($rotation_center/center2.position)
-		3:
-			changing_block[0].position = $sprites_position/pos5.position
-			changing_block[1].position = $sprites_position/pos6.position
-			change_center_position($rotation_center/center3.position)
-		4:
-			changing_block[0].position = $sprites_position/pos1.position
-			changing_block[1].position = $sprites_position/pos5.position
-			change_center_position($rotation_center/center4.position)
-		5:
-			changing_block[0].position = $sprites_position/pos2.position
-			changing_block[1].position = $sprites_position/pos4.position
-			change_center_position($rotation_center/center5.position)
-		6:
-			changing_block[0].position = $sprites_position/pos2.position
-			changing_block[1].position = $sprites_position/pos5.position
-			change_center_position($rotation_center/center6.position)
-		7:
-			changing_block[0].position = $sprites_position/pos2.position
-			changing_block[1].position = $sprites_position/pos3.position
-			change_center_position($rotation_center/center7.position)
+func fall()->void:
+	global_position += step*falling_direction
+	if hit_limits():
+		global_position -= step*falling_direction
+		is_falling = false
+		on_stop_falling.emit(self)

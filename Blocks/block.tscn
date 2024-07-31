@@ -1,16 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsaeeaqcrl2i8"]
+[gd_scene load_steps=4 format=3 uid="uid://cjhf5sv7b4fjt"]
 
-[ext_resource type="Script" path="res://Blocks/block.gd" id="1_j5g2v"]
-[ext_resource type="Texture2D" uid="uid://cw2adv38nj13a" path="res://Images/block.png" id="1_ruahk"]
+[ext_resource type="Script" path="res://Blocks/Block.gd" id="1_6o3fd"]
+[ext_resource type="Texture2D" uid="uid://cw2adv38nj13a" path="res://Images/block.png" id="1_xu234"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrd2h"]
-size = Vector2(30, 29.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02tnn"]
+size = Vector2(28, 28)
 
-[node name="block" type="CollisionShape2D" groups=["block"]]
-position = Vector2(0, 0.75)
-shape = SubResource("RectangleShape2D_nrd2h")
-script = ExtResource("1_j5g2v")
+[node name="Block" type="Node2D"]
+script = ExtResource("1_6o3fd")
 
-[node name="sprite" type="Sprite2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["block"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_02tnn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("1_ruahk")
+texture = ExtResource("1_xu234")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
