@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwmj4hpcy80km"]
 
 [ext_resource type="Script" path="res://Level/Level.gd" id="1_dlofw"]
-[ext_resource type="PackedScene" uid="uid://cjhf5sv7b4fjt" path="res://Blocks/Block.tscn" id="1_hw36y"]
+[ext_resource type="PackedScene" uid="uid://cjhf5sv7b4fjt" path="res://Blocks/block.tscn" id="1_hw36y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h1v4w"]
 

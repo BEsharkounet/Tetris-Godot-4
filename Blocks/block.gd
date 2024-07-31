@@ -15,5 +15,5 @@ func get_color()->Color:
 func collide_with(block:Block)->bool:
 	return block.global_position.distance_to(global_position) < 10
 
-func fall()->void:
-	global_position += step*falling_direction
+func fall(cases:int)->void:
+	global_position += step*falling_direction*cases

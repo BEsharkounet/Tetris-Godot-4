@@ -73,7 +73,10 @@ func check_lines(blocks:Array)->void:
 	fall(lines_y)
 
 func fall(lines_y:Array)->void:
-	for line in lines_y:
-		for singleblock:Block in $SingleBlocks.get_children():
+	for singleblock:Block in $SingleBlocks.get_children():
+		var counter:int = 0
+		for line in lines_y:
 			if singleblock.global_position.y < line:
-				singleblock.fall()
+				counter += 1
+				
+		singleblock.fall(counter)
