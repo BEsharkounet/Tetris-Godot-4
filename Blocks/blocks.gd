@@ -57,7 +57,7 @@ var block_color:Array = [
 ]
 
 func set_blocks(val:int)->void:
-	type = val
+	type = val as BLOCKS_TYPES
 	_initialize_blocks()
 	_initialize_rotation_center()
 	_initialize_color()
@@ -84,7 +84,7 @@ func _ready():
 	randomize()
 	set_blocks(randi()%7)
 
-func _process(delta):
+func _process(_delta):
 	if is_falling:
 		if Input.is_action_just_pressed("ui_up"):
 			_rotate_left()
