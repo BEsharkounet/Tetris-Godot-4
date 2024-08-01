@@ -24,6 +24,10 @@ Inputs :
 - Left and right arrows to move the piece left and right respectively.
 - Up and down arrows to rotate the tetrominos in both directions.
 
+<img width="332" alt="Capture d’écran 2024-08-01 à 21 39 18" src="https://github.com/user-attachments/assets/27e5284f-a314-4bb0-b4f1-49b363dd28f1">
+<img width="338" alt="Capture d’écran 2024-08-01 à 21 41 18" src="https://github.com/user-attachments/assets/6501dda8-766e-46ad-9238-abef2991ef1a">
+
+
 ## Customization
 
 You can suggest modifications and improvement so for exemple we could change easily the size of cubes.
