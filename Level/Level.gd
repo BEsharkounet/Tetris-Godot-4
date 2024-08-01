@@ -11,9 +11,9 @@ func _ready():
 	spawn()
 
 func collide_with(block:Block)->bool:
-	return collide_with_walls(block) or collide_with_signleblocks(block)
+	return collide_with_walls(block) or collide_with_singleblocks(block)
 
-func collide_with_signleblocks(block:Block)->bool:
+func collide_with_singleblocks(block:Block)->bool:
 	for singleblock:Block in $SingleBlocks.get_children():
 		if singleblock.collide_with(block):
 			return true
