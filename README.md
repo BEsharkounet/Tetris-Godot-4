@@ -15,7 +15,11 @@ Once you have Godot 4.2 installed, you can clone or download this repository to 
 
 To play the game, simply run the project in Godot 4.2 and use the arrow keys on your keyboard to move the falling tetromino pieces. 
 The objective is to clear as many lines as possible by forming complete rows with the tetromino pieces.
-Left and right to move the piece, up and down to rotate in different directions.
+
+Inputs :
+
+- Left and right arrows to move the piece left and right respectively.
+- Up and down arrows to rotate the tetrominos in both directions.
 
 ## Customization
 
