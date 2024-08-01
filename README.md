@@ -9,7 +9,7 @@ Here is a global overview of what the project has :
 
 To get started, you will need to have Godot 4.2 installed on your machine. You can download it from the official website: https://godotengine.org/download.
 
-Once you have Godot 4.0 installed, you can clone or download this repository to your local machine.
+Once you have Godot 4.2 installed, you can clone or download this repository to your local machine.
 
 ## How to Play
 
