@@ -34,5 +34,6 @@ Feel free to use the tetris node in your games, to add, for exemple, a minigame.
 
 This game was all created by me.
 can find me at https://www.linkedin.com/in/justin-smagghe/
+
 Feel free to use it as a starting point for your own projects.
 
