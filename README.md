@@ -25,7 +25,7 @@ Inputs :
 
 You can suggest modifications and improvement so for exemple we could change easily the size of cubes.
 
-Feel free tu use the tetris node in your games, to add, for exemple, a minigame easily.
+Feel free to use the tetris node in your games, to add, for exemple, a minigame.
 
 ## Credits
 
