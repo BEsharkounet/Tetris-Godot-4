@@ -5,6 +5,8 @@ Here is a global overview of what the project has :
 
 <img width="447" alt="Project architecture and responsabilities" src="https://github.com/user-attachments/assets/653190fb-5740-4e30-8603-a5fb78e25b0e">
 
+One of the challenges had to make the system independent of any physic interaction, and not using tilemaps to allow more flexibility in the future.
+
 ## Getting Started
 
 To get started, you will need to have Godot 4.2 installed on your machine. You can download it from the official website: https://godotengine.org/download.
