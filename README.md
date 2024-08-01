@@ -1,4 +1,4 @@
-# Tetris Game with Godot 4.2
+# Tetris Like Game with Godot 4.2
 
 This is a simple and easy to reproduce Tetris game developed using Godot 4.2 game engine and GDScript.
 
